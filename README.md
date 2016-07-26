@@ -38,8 +38,8 @@ curl -o point100.geojson https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&a
 ````
 
 #### Required parameters
-+ **lng** - a valid longitude
-+ **lat** - a valid latitude
++ **lng** - a valid longitude (WGS84)
++ **lat** - a valid latitude (WGS84)
 + **age** - the target reconstruction time. Can be any integer between 0 and 550
 
 #### Output
