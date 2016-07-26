@@ -4,7 +4,7 @@ from shapely.geometry import mapping
 import ast
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/reconstruct', methods=['GET', 'POST'])
 def default():
     if request.method == 'POST':
         if 'shape' not in request.form or 'age' not in request.form:

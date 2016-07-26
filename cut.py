@@ -10,7 +10,7 @@ plate_lookup = {}
 plates = []
 
 # Load the plates from a shapefile and spatially index
-for pos, plate in enumerate(fiona.open('./StaticPolygons/shapefile/Seton_etal_ESR2012_StaticPolygons_2012.1.shp')):
+for pos, plate in enumerate(fiona.open('./StaticPolygons/Shapefile/Seton_etal_ESR2012_StaticPolygons_2012.1.shp')):
     plate_lookup[pos] = plate['properties']['PLATEID1']
     converted = shape(plate['geometry'])
     idx.insert(pos, converted.bounds)
