@@ -40,7 +40,7 @@ curl -o point100.geojson https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&a
 #### Required parameters
 + **lng** - a valid longitude (WGS84)
 + **lat** - a valid latitude (WGS84)
-+ **age** - the target reconstruction time. Can be any integer between 0 and 550
++ **age** - the target reconstruction time in millions of years before present. Can be any integer between 0 and 550
 
 #### Output
 Returns a GeoJSON FeatureCollection. There will be one Feature, the input point, and it will have a property `plate_id` indicating which plate the point was assigned to.
