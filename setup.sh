@@ -2,12 +2,6 @@ curl -L -o pygplates.zip http://downloads.sourceforge.net/project/gplates/pygpla
 unzip -a pygplates.zip
 rm pygplates.zip
 
-curl -L -o pygplates.tar.bz2 http://downloads.sourceforge.net/project/gplates/pygplates/beta-revision-12/pygplates_rev12_unixsrc.tar.bz2?r=&ts=1467312228&use_mirror=tenet
-tar -jxvf pygplates.tar.bz2
-rm pygplates.tar.bz2
-cd pygplates_rev12_src
-cmake .
-
 curl -L -O ftp://earthbyte.org/earthbyte/GPlates/SampleData_GPlates1.5/Individual/FeatureCollections/Rotations.zip
 unzip -a Rotations.zip
 rm Rotations.zip
@@ -33,6 +27,3 @@ make install
 cd ..
 
 echo "Done downloading pygplates and associated data"
-
-
-brew install Qt
