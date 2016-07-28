@@ -59,7 +59,7 @@ curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?points=-89,43,1
 + **age** - the target reconstruction time in millions of years before present.  Can be any integer between 0 and 550.
 
 #### Output
-Returns a list of GeoJSON FeatureCollections, one for each input point.  Each will contain one Feature.  This Feature will have a property `plate_id` indicating which plate the point was assigned to.  If you specify labels on the points, these labels will be included in each Feature under the property `selector`.
+Returns a list of GeoJSON FeatureCollections, one for each input point.  Each will contain one Feature.  This Feature will have a property `plate_id` indicating which plate the point was assigned to.  For every point for which a label was specified, the resulting feature will have a property `label` whose value is the specified label.
 
 ### via POST request
 

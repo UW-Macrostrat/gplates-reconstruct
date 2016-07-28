@@ -21,7 +21,7 @@ def default():
             coords = p.split(',')
             reconstructed = reconstruct({'type': 'Point', 'coordinates': [float(coords[0]), float(coords[1])]}, age)
             if len(coords) > 2:
-                reconstructed['selector'] = coords[2]
+                reconstructed['features'][0]['properties']['label'] = coords[2]
             result.append(reconstructed)
         return jsonify(**{'result': result})
     else:
