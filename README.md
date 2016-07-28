@@ -37,7 +37,7 @@ Reconstruct a point to 100 MA
 curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&age=100'
 ````
 
-#### Parameters
+#### Required parameters
 + **lng** - a valid longitude (WGS84)
 + **lat** - a valid latitude (WGS84)
 + **age** - the target reconstruction time in millions of years before present. Can be any integer between 0 and 550.
@@ -54,7 +54,7 @@ Reconstruct a list of points to 100 MA
 curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?points=-89,43,1%20-92.5,43.2,2&age=100'
 ````
 
-#### Parameters
+#### Required parameters
 + **points** - a list of points, separated by whitespace.  Each point must consist of a longitude and latitude, separated by a comma.  You may also append a label to each point, also separated by a comma.
 + **age** - the target reconstruction time in millions of years before present.  Can be any integer between 0 and 550.
 

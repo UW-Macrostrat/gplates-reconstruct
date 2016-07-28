@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from reconstruct import reconstruct
 from shapely.geometry import mapping
 import ast
@@ -8,12 +8,16 @@ app = Flask(__name__)
 def default():
     if request.method == 'POST':
         if 'shape' not in request.form or 'age' not in request.form:
-            return jsonify(**{'error': 'A shape and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct'})
+            resp = make_response('{"error": "A shape and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct"}\n', 400)
+            resp.headers['Content-Type'] = 'application/json'
+            return resp
         reconstructed = reconstruct(ast.literal_eval(request.form['shape']), request.form.get('age', type=int))
         return jsonify(**reconstructed)
     elif request.args.get('points'):
         if not request.args.get('age'):
-            return jsonify(**{'error': 'You must specify an age'})
+            resp = make_response('{"error": "You must specify an age. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct"}\n', 400)
+            resp.headers['Content-Type'] = 'application/json'
+            return resp
         points = request.args.get('points').split()
         age = int(request.args.get('age'))
         result = [ ]
@@ -26,8 +30,9 @@ def default():
         return jsonify(**{'result': result})
     else:
         if not request.args.get('lat') or not request.args.get('lng') or not request.args.get('age'):
-            return jsonify(**{'error': 'A lng, lat, and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct'})
-
+            resp = make_response('{"error": "A lng, lat, and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct"}\n', 400)
+            resp.headers['Content-Type'] = 'application/json'
+            return resp
         reconstructed = reconstruct({'type': 'Point', 'coordinates': [float(request.args.get('lng')), float(request.args.get('lat'))]}, int(request.args.get('age')))
 
         return jsonify(**reconstructed)
