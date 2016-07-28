@@ -28,8 +28,8 @@ The geometry used to assign plate IDs is from Seton et. al and can be found [her
 
 ## Usage
 
-### via GET request
-Because there is a max length for URLs, only simple point queries are available with a GET request.
+### single point via GET request
+If you have a single point to reconstruct, you can use a simple GET request.
 
 #### Example
 Reconstruct a point to 100 MA
@@ -37,13 +37,23 @@ Reconstruct a point to 100 MA
 curl -o point100.geojson https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&age=100
 ````
 
-#### Required parameters
+#### Parameters
 + **lng** - a valid longitude (WGS84)
 + **lat** - a valid latitude (WGS84)
-+ **age** - the target reconstruction time in millions of years before present. Can be any integer between 0 and 550
++ **age** - the target reconstruction time in millions of years before present. Can be any integer between 0 and 550.
 
 #### Output
 Returns a GeoJSON FeatureCollection. There will be one Feature, the input point, and it will have a property `plate_id` indicating which plate the point was assigned to.
+
+### list of points via GET request
+You can also reconstruct a list of points via a GET request.  Because there is a maximum length on a URL, don't make the list overly long.
+
+#### Parameters
++ **points** - a list of points, separated by whitespace.  Each point must consist of a longitude and latitude, separated by a comma.  You may also append a label to each point, also separated by a comma.
++ **age** - the target reconstruction time in millions of years before present.  Can be any integer between 0 and 550.
+
+#### Output
+Returns a GeoJSON FeatureCollection.  There will be one Feature for each input point.  Each of these features will have a property `plate_id` indicating which plate the point was assigned to.  If you specify labels on the points, these labels will be included in each Feature under the property `selector`.
 
 ### via POST request
 

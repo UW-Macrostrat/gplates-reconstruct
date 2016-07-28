@@ -20,8 +20,8 @@ def default():
         for p in points:
             coords = p.split(',')
             reconstructed = reconstruct({'type': 'Point', 'coordinates': [float(coords[0]), float(coords[1])]}, age)
-            if coords.len > 2:
-                reconstructed.selector = coords[2]
+            if len(coords) > 2:
+                reconstructed['selector'] = coords[2]
             result.append(reconstructed)
         return jsonify(**{'result': result})
     else:
