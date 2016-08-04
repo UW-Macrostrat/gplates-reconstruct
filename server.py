@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, make_response
 from reconstruct import reconstruct
 from shapely.geometry import mapping
 import ast
+import json
 app = Flask(__name__)
 
 @app.route('/reconstruct', methods=['GET', 'POST'])
@@ -11,7 +12,8 @@ def default():
             resp = make_response('{"error": "A shape and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct"}\n', 400)
             resp.headers['Content-Type'] = 'application/json'
             return resp
-        reconstructed = reconstruct(ast.literal_eval(request.form['shape']), request.form.get('age', type=int))
+
+        reconstructed = reconstruct(json.loads(request.form['shape']), request.form.get('age', type=int))
         return jsonify(**reconstructed)
     elif request.args.get('points'):
         if not request.args.get('age'):
