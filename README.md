@@ -1,5 +1,5 @@
 # GPlates reconstruction service
-A simple web interface for interacting with the `pygplates` library.
+A simple web interface for interacting with the `pygplates` python library. For more information see [pygplates documentation](http://www.gplates.org/docs/pygplates/). 
 
 ### Info
 ##### Rotation model
