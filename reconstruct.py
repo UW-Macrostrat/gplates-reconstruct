@@ -86,29 +86,40 @@ def geojsonify(features):
 
 def reconstruct_feature(props, f, age):
     rotated = []
-    cut_feature = cut(f)
+    cut_feature = cut(f, age)
 
     features = []
+    not_rotated = []
     for piece in cut_feature:
         new_props = deepcopy(props)
         new_props['plate_id'] = piece['plate_id']
-        features.append(construct_gplate_feature(piece['geometry'], piece['plate_id'], new_props))
+        if piece['plate_id']:
+            features.append(construct_gplate_feature(piece['geometry'], piece['plate_id'], new_props))
+        else:
+            not_rotated.append({
+                'type': 'Feature',
+                'properties': new_props,
+                'geometry': None
+            })
 
     rotated = geojsonify(rotate(features, age))
-    return {
+    output = {
         'type': 'FeatureCollection',
         'features': [
             {'type': 'Feature', 'properties': f['properties'], 'geometry': mapping(f['geometry']) } for f in rotated
         ]
     }
 
+    output['features'] = output['features'] + not_rotated
+
+    return output
 
 def reconstruct(input_geojson, age):
     if 'features' in input_geojson:
         features = []
         for feature in input_geojson['features']:
             # Returns list of dictionaries with a 'geometry' and 'plate_id'
-            cut_feature = cut(shape(feature['geometry']))
+            cut_feature = cut(shape(feature['geometry']), age)
 
             for each in cut_feature:
                 # The plate_id is recorded as a property so that it can be attached to the output
@@ -134,7 +145,7 @@ def reconstruct(input_geojson, age):
         return reconstruct_feature(props, geom, age)
 
 
-# 
+#
 # with open('./centroids.geojson', 'r') as input_geojson:
 #     geojson = json.load(input_geojson)
 #     start_time = time.time()
