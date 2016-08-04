@@ -63,11 +63,11 @@ def handleGeometryCollection(geometry):
 def get_intersecting_plates(bounds, age):
     # Use Seton plates (include seafloor) if < 200 MA
     if age <= 200:
-        return [{'geometry': plates_seton[pos], 'plate_id': plate_lookup_seton[pos]['plateid']} for pos in idx_seton.intersection(bounds) if plate_lookup_seton[pos]['fromage'] > age]
+        return [{'geometry': plates_seton[pos], 'plate_id': plate_lookup_seton[pos]['plateid']} for pos in idx_seton.intersection(bounds) if plate_lookup_seton[pos]['fromage'] >= age]
 
     # Use Earthbyte plates (exclude seafloor) if > 200MA
     else:
-        return [{'geometry': plates_eb[pos], 'plate_id': plate_lookup_eb[pos]['plateid']} for pos in idx_eb.intersection(bounds) if plate_lookup_eb[pos]['fromage'] > age]
+        return [{'geometry': plates_eb[pos], 'plate_id': plate_lookup_eb[pos]['plateid']} for pos in idx_eb.intersection(bounds) if plate_lookup_eb[pos]['fromage'] >= age]
 
 def cut_feature(feature, age):
     pieces = []
