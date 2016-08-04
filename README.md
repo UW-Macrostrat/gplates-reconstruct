@@ -1,5 +1,5 @@
 # GPlates reconstruction service
-A simple web interface for interacting with the `pygplates` library.
+A simple web interface for interacting with the `pygplates` python library. For more information see [pygplates documentation](http://www.gplates.org/docs/pygplates/). 
 
 ### Info
 ##### Rotation model
@@ -36,22 +36,38 @@ The geometry used to assign plate IDs is from Seton et. al and can be found [her
 
 ## Usage
 
-### via GET request
-Because there is a max length for URLs, only simple point queries are available with a GET request.
+### single point via GET request
+If you have a single point to reconstruct, you can use a simple GET request.
 
 #### Example
 Reconstruct a point to 100 MA
 ````
-curl -o point100.geojson https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&age=100
+curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&age=100'
 ````
 
 #### Required parameters
-+ **lng** - a valid longitude
-+ **lat** - a valid latitude
-+ **age** - the target reconstruction time. Can be any integer between 0 and 550
++ **lng** - a valid longitude (WGS84)
++ **lat** - a valid latitude (WGS84)
++ **age** - the target reconstruction time in millions of years before present. Can be any integer between 0 and 550.
 
 #### Output
 Returns a GeoJSON FeatureCollection. There will be one Feature, the input point, and it will have a property `plate_id` indicating which plate the point was assigned to.
+
+### list of points via GET request
+You can also reconstruct a list of points via a GET request.  Because there is a maximum length on a URL, don't make the list overly long.
+
+#### Example
+Reconstruct a list of points to 100 MA
+````
+curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?points=-89,43,1%20-92.5,43.2,2&age=100'
+````
+
+#### Required parameters
++ **points** - a list of points, separated by whitespace.  Each point must consist of a longitude and latitude, separated by a comma.  You may also append a label to each point, also separated by a comma.
++ **age** - the target reconstruction time in millions of years before present.  Can be any integer between 0 and 550.
+
+#### Output
+Returns a list of GeoJSON FeatureCollections, one for each input point.  Each will contain one Feature.  This Feature will have a property `plate_id` indicating which plate the point was assigned to.  For every point for which a label was specified, the resulting feature will have a property `label` whose value is the specified label.
 
 ### via POST request
 
