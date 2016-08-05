@@ -34,7 +34,7 @@ def encode_props(props):
 
 def construct_gplate_feature(f, plateid, props):
     gplateFeature = pygplates.Feature(pygplates.FeatureType.gpml_unclassified_feature)
-    gplateFeature.set_reconstruction_plate_id(plateid)
+    gplateFeature.set_reconstruction_plate_id(int(plateid))
 
     # Once reconstructed we can't retrieve the geometry type, so record it now as a description
     # This allows us to correctly form GeoJSON later
