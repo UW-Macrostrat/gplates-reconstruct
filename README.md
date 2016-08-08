@@ -35,7 +35,7 @@ It can be found [here](http://tinyurl.com/jm2s3av).
 <!---
 ftp://earthbyte.org/earthbyte/GPlates/SampleData_GPlates1.5/Individual/FeatureCollections/StaticPolygons.zip
 --->
-The geometry used to assign plate IDs is from Seton et. al and can be found [here](http://tinyurl.com/hxj366w).
+The geometry used to assign plate IDs is from Seton et. al (2012) and can be found [here](http://tinyurl.com/hxj366w).
 
 ### Oddities
 + Because of an oddity with pygplates, `null` property values in the input are converted to empty strings in the output.
