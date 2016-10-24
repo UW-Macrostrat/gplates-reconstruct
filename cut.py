@@ -41,7 +41,7 @@ def handleGeometryCollection(geometry):
         return []
 
 def get_intersecting_plates(bounds):
-    # Use Earthbyte plates (exclude seafloor) if > 200MA
+    # Use Earthbyte plates (exclude seafloor)
     return [{'geometry': plates_eb[pos], 'plate_id': plate_lookup_eb[pos]['plateid']} for pos in idx_eb.intersection(bounds)]
 
 def cut_feature(feature, age):
