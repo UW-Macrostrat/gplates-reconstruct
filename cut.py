@@ -48,7 +48,7 @@ def cut_feature(feature, age):
     pieces = []
 
     # Use the spatial index (Luke) to get a list of plates this Feature intersects
-    intersecting_plates = get_intersecting_plates(feature.bounds, age)
+    intersecting_plates = get_intersecting_plates(feature.bounds)
 
     # For each intersecting plate, get the intersection with the target Feature
     for plate in intersecting_plates:
