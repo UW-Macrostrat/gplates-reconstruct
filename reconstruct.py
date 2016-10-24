@@ -58,12 +58,8 @@ def construct_gplate_feature(f, plateid, props):
     return gplateFeature
 
 
-def rotate(features, age):
-    if age <= 200:
-        rotation_model = pygplates.RotationModel('./Rotations/Seton_etal_ESR2012_2012.1.rot')
-    else:
-        rotation_model = pygplates.RotationModel('./1_Phanerozoic_Plate_Motions_GPlates/Phanerozoic_EarthByte.rot')
-
+def rotate(features,age):
+    rotation_model = pygplates.RotationModel('./1_Phanerozoic_Plate_Motions_GPlates/Phanerozoic_EarthByte.rot')
     rotated = []
     pygplates.reconstruct(features, rotation_model, rotated, age)
     return rotated

@@ -2,26 +2,6 @@ from shapely.geometry import shape, MultiPolygon, Polygon, LineString, MultiLine
 import fiona
 from rtree import index
 
-# Spatially index the Seton plate set
-# Create the spatial index
-idx_seton = index.Index()
-
-# Create a hash that can be used to look up a plate_id given a plate index
-plate_lookup_seton = {}
-plates_seton = []
-
-# Load the plates from a shapefile and spatially index
-for pos, plate in enumerate(fiona.open('./StaticPolygons/Shapefile/Seton_etal_ESR2012_StaticPolygons_2012.1.shp')):
-    plate_lookup_seton[pos] = plate['properties']['PLATEID1']
-    plate_lookup_seton[pos] = {
-        'plateid': plate['properties']['PLATEID1'],
-        'fromage': plate['properties']['FROMAGE']
-    }
-    converted = shape(plate['geometry'])
-    idx_seton.insert(pos, converted.bounds)
-    plates_seton.append(converted)
-
-
 # Spatially index the EarthByte plate set
 # Create the spatial index
 idx_eb = index.Index()
@@ -60,20 +40,15 @@ def handleGeometryCollection(geometry):
         print 'Non-empty geometry collection'
         return []
 
-def get_intersecting_plates(bounds, age):
-    # Use Seton plates (include seafloor) if < 200 MA
-    if age <= 200:
-        return [{'geometry': plates_seton[pos], 'plate_id': plate_lookup_seton[pos]['plateid']} for pos in idx_seton.intersection(bounds) if plate_lookup_seton[pos]['fromage'] >= age]
-
-    # Use Earthbyte plates (exclude seafloor) if > 200MA
-    else:
-        return [{'geometry': plates_eb[pos], 'plate_id': plate_lookup_eb[pos]['plateid']} for pos in idx_eb.intersection(bounds) if plate_lookup_eb[pos]['fromage'] >= age]
+def get_intersecting_plates(bounds):
+    # Use Earthbyte plates (exclude seafloor)
+    return [{'geometry': plates_eb[pos], 'plate_id': plate_lookup_eb[pos]['plateid']} for pos in idx_eb.intersection(bounds)]
 
 def cut_feature(feature, age):
     pieces = []
 
     # Use the spatial index (Luke) to get a list of plates this Feature intersects
-    intersecting_plates = get_intersecting_plates(feature.bounds, age)
+    intersecting_plates = get_intersecting_plates(feature.bounds)
 
     # For each intersecting plate, get the intersection with the target Feature
     for plate in intersecting_plates:
