@@ -3,17 +3,7 @@ A simple web interface for interacting with the `pygplates` python library. For 
 
 ### Info
 ##### Rotation model
-If the input age is less than or equal to 200 MA, the following rotation model is used:
-
-````
-Seton, M., Müller, R.D., Zahirovic, S., Gaina, C., Torsvik, T., G., S.,
-  Talsma, A., Gurnis, M., Turner, M., Maus, S., Chandler, M., 2012,
-  Global continental and ocean basin reconstructions since 200 Ma, Earth
-  Science Reviews, 113: 212-270
-````
-It can be found [here](ftp://earthbyte.org/earthbyte/GPlates/SampleData_GPlates1.5/Individual/FeatureCollections/Rotations.zip).
-
-If the input age is greater than 200 MA, the following rotation model is used:
+The following rotation model is used:
 
 ````
 Wright, N., S. Zahirovic, R. D. Müller, and M. Seton (2013), Towards
@@ -21,16 +11,22 @@ Wright, N., S. Zahirovic, R. D. Müller, and M. Seton (2013), Towards
   integrating open-access paleogeographic and paleobiology data with
   plate tectonics, Biogeosciences, 10, 1529-1541
 ````
-It can be found [here](ftp://ftp.earthbyte.org/papers/Wright_etal_Paleobiogeography/1_Phanerozoic_Plate_Motions_GPlates.zip)
+<!---
+ftp://ftp.earthbyte.org/papers/Wright_etal_Paleobiogeography/1_Phanerozoic_Plate_Motions_GPlates.zip
+--->
+
+It can be found [here](http://tinyurl.com/jm2s3av).
 
 
 ##### Plates
-The geometry used to assign plate IDs is from Seton et. al and can be found [here](ftp://earthbyte.org/earthbyte/GPlates/SampleData_GPlates1.5/Individual/FeatureCollections/StaticPolygons.zip).
+<!---
+ftp://earthbyte.org/earthbyte/GPlates/SampleData_GPlates1.5/Individual/FeatureCollections/StaticPolygons.zip
+--->
+The geometry used to assign plate IDs is from Seton et. al (2012) and can be found [here](http://tinyurl.com/hxj366w).
 
 ### Oddities
 + Because of an oddity with pygplates, `null` property values in the input are converted to empty strings in the output.
 + In order to preserve original geometry types, polygons that span multiple plates are divided into multiple features, one for each plate. Thus if one polygon is provided and it sits on three plates, three features will be returned, one for each plate.
-+ The Seton dataset used for 0-200MA includes seafloors, but the Wright dataset does not
 + Plates have a valid age range. Thus if a point is assigned to a plate with a valid age of 0-20MA, and it is reconstructed to 15 MA, a valid geometry will be returned. However, if it is reconstructed to 21 MA, a `null` geometry will be returned along with a `null` plateid.
 + If a polygon argument is not entirely contained by a plate, then the polygon argument is divided between the areas of the plates that it does intersect. If all intersecting portions of the polygon can be rotated to the specified age, then the rotations will occur independently for each segment of the original polygon. If one or more of the plates intersecting the polygon do not have rotations for the specified age, NULL values for that plate segment will be returned.
 
