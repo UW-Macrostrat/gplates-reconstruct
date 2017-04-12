@@ -29,7 +29,10 @@ def default():
             if len(coords) > 2:
                 reconstructed['features'][0]['properties']['label'] = coords[2]
             result.append(reconstructed)
-        return jsonify(**{'result': result})
+        if request.args.get('format') and request.args.get('format') == 'geojson_bare':
+            return jsonify(**{'type': 'FeatureCollection', 'features': [ item for r in [feature for feature in [ fc['features'] for fc in result ]] for item in r ]})
+        else:
+            return jsonify(**{'result': result})
     else:
         if not request.args.get('lat') or not request.args.get('lng') or not request.args.get('age'):
             resp = make_response('{"error": "A lng, lat, and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct"}\n', 400)
