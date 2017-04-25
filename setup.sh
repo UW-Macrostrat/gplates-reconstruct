@@ -28,3 +28,5 @@ make install
 cd ..
 
 echo "Done downloading pygplates and associated data"
+
+# gdal is needed - brew install gdal
