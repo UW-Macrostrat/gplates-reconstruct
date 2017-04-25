@@ -22,6 +22,7 @@ curl -L -O 'http://download.osgeo.org/libspatialindex/spatialindex-src-1.8.5.tar
 tar -zxvf spatialindex-src-1.8.5.tar.gz
 rm spatialindex-src-1.8.5.tar.gz
 cd spatialindex-src-1.8.5
+./configure
 make
 make install
 cd ..
