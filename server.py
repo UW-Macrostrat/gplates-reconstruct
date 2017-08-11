@@ -79,7 +79,7 @@ def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_t
     return decorator
 
 
-@app.route('/reconstruct', methods=['GET', 'POST'])
+@app.route('/gplates/reconstruct', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def default(send_wildcard=True):
     if request.method == 'POST':
@@ -123,7 +123,7 @@ def default(send_wildcard=True):
         return jsonify(**reconstructed)
 
 
-@app.route('/models', methods=['GET'])
+@app.route('/gplates/models', methods=['GET'])
 @crossdomain(origin='*')
 def models(send_wildcard=True):
     return jsonify(plate_models)

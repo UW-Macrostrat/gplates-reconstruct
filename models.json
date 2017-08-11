@@ -66,13 +66,13 @@
 },
 {
   "name": "scotese2017",
-  "citation": "Scotese, C.R. 2017",
+  "citation": "Scotese, C.R. 2017, The PALEOMAP Project PaleoAtlas. PALEOMAP Project, Evanston, IL.",
   "url": "https://www.earthbyte.org/paleomap-paleoatlas-for-gplates/",
   "data_url": "ftp://ftp.earthbyte.org/earthbyte/PaleoAtlas_Scotese_v2.zip",
   "date_acquired": "2017-08-10",
   "doi": "",
   "min_age": 0,
-  "max_age": 600,
+  "max_age": 750,
   "coverage": "continental and seafloor",
   "models": [{
       "min_age": 0,
