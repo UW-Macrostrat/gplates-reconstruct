@@ -1,0 +1,112 @@
+[{
+  "name": "wright2013",
+  "citation": "Wright, N., S. Zahirovic, R. D. Müller, and M. Seton (2013), Towards community-driven, open-access paleogeographic reconstructions: integrating open-access paleogeographic and paleobiology data with plate tectonics, Biogeosciences, 10, 1529-1541",
+  "url": "http://www.biogeosciences.net/10/1529/2013/bg-10-1529-2013.pdf",
+  "data_url": "ftp://ftp.earthbyte.org/papers/Wright_etal_Paleobiogeography/1_Phanerozoic_Plate_Motions_GPlates.zip",
+  "date_acquired": "2017-08-10",
+  "doi": "10.5194/bg-10-1529-2013",
+  "min_age": 0,
+  "max_age": 580,
+  "coverage": "continental",
+  "models": [{
+      "min_age": 0,
+      "max_age": 580,
+      "rotation_file": "model.rot"
+  }]
+},{
+  "name": "merdith2017",
+  "citation": "Merdith, A.S., Collins, A.S., Williams, S.E., Pisarevsky, S., Foden, J.F., Archibald, D., Blades, M.L., Alessio, B.L., Armistead, S., Plavsa, D. and Clark, C., 2017. A full-plate global reconstruction of the Neoproterozoic. Gondwana Research.",
+  "url": "https://www.earthbyte.org/towards-community-driven-paleogeographic-reconstructions-integrating-open-access-paleogeographic-and-paleobiology-data-with-plate-tectonics/",
+  "data_url": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Merdith_etal_2017_GR.zip",
+  "date_acquired": "2017-08-10",
+  "doi": "10.1016/j.gr.2017.04.001",
+  "min_age": 520,
+  "max_age": 1000,
+  "coverage": "continental",
+  "models": [{
+      "min_age": 520,
+      "max_age": 1000,
+      "rotation_file": "model.rot"
+  }]
+},
+{
+  "name": "seton2012",
+  "citation": "Seton, M., Müller, R.D., Zahirovic, S., Gaina, C., Torsvik, T., G., S., Talsma, A., Gurnis, M., Turner, M., Maus, S., Chandler, M., 2012, Global continental and ocean basin reconstructions since 200 Ma, Earth Science Reviews, 113: 212-270",
+  "url": "http://www.earthbyte.org/Resources/Pdf/Seton_etal_Global_Plate_Model_ESR2012.pdf",
+  "data_url": "ftp://ftp.earthbyte.org/Data_Collections/Seton_etal_2012_ESR.zip",
+  "doi": "10.1016/j.earscirev.2012.03.002",
+  "min_age": 0,
+  "max_age": 200,
+  "coverage": "continental and seafloor",
+  "models": [{
+      "min_age": 0,
+      "max_age": 200,
+      "rotation_file": "model.rot"
+  }]
+},
+{
+  "name": "matthews2016",
+  "citation": "Matthews, K.J., Maloney, K.T., Zahirovic, S., Williams, S.E., Seton, M., and Müller, R.D. 2016, Global plate boundary evolution and kinematics since the late Paleozoic: Global and Planetary Change, Vol 146, 226-250.",
+  "url": "https://www.researchgate.net/publication/308978755_Global_plate_boundary_evolution_and_kinematics_since_the_late_Paleozoic",
+  "data_url": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Matthews_etal_2016_Global_Plate_Model_GPC.zip",
+  "date_acquired": "2017-08-10",
+  "doi": "10.1016/j.gloplacha.2016.10.002",
+  "min_age": 0,
+  "max_age": 410,
+  "coverage": "continental",
+  "models": [{
+      "min_age": 0,
+      "max_age": 249,
+      "rotation_file": "0-250.rot"
+  }, {
+      "min_age": 250,
+      "max_age": 410,
+      "rotation_file": "251-410.rot"
+  }]
+},
+{
+  "name": "scotese2017",
+  "citation": "Scotese, C.R. 2017",
+  "url": "https://www.earthbyte.org/paleomap-paleoatlas-for-gplates/",
+  "data_url": "ftp://ftp.earthbyte.org/earthbyte/PaleoAtlas_Scotese_v2.zip",
+  "date_acquired": "2017-08-10",
+  "doi": "",
+  "min_age": 0,
+  "max_age": 600,
+  "coverage": "continental and seafloor",
+  "models": [{
+      "min_age": 0,
+      "max_age": 750,
+      "rotation_file": "model.rot"
+  }]
+},{
+  "name": "muller2016",
+  "citation": "Müller, R.D., Seton, M., Zahirovic, S., Williams, S.E., Matthews, K.J., Wright, N.M., Shephard, G.E., Maloney, K.T., Barnett-Moore, N., Hosseinpour, M., Bower, D.J., Cannon, J., 2016, Ocean basin evolution and global-scale plate reorganization events since Pangea breakup: Annual Reviews of Earth and Planetary Sciences, Vol 44, 107-13",
+  "url": "https://www.researchgate.net/publication/284179323_Ocean_Basin_Evolution_and_Global-Scale_Plate_Reorganization_Events_Since_Pangea_Breakup",
+  "data_url": "ftp://ftp.earthbyte.org/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_AREPS_Supplement.zip",
+  "date_acquired": "2017-08-10",
+  "doi": "10.1146/annurev-earth-060115-012211",
+  "min_age": 0,
+  "max_age": 230,
+  "coverage": "continental and seafloor",
+  "models": [{
+      "min_age": 0,
+      "max_age": 230,
+      "rotation_file": "model.rot"
+  }]
+},{
+  "name": "shephard2013",
+  "citation": "Shephard, G. E., Müller, R. D., and Seton, M., 2013, The tectonic evolution of the Arctic since Pangea breakup: Integrating constraints from surface geology and geophysics with mantle structure: Earth-Science Reviews, v. 124, p. 148-183.",
+  "url": "http://www.earthbyte.org/Resources/Pdf/Shephard_etal_2013_Arctic_plate_model_Earth-Sci_Rev.pdf",
+  "data_url": "ftp://ftp.earthbyte.org/papers/Shephard_etal_Arctic_plate_model/Shephard_etal_2013_ESR.zip",
+  "date_acquired": "2017-08-10",
+  "doi": "10.1016/j.earscirev.2012.03.002",
+  "min_age": 0,
+  "max_age": 200,
+  "coverage": "continental and seafloor",
+  "models": [{
+      "min_age": 0,
+      "max_age": 200,
+      "rotation_file": "model.rot"
+  }]
+}]

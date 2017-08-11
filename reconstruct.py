@@ -1,7 +1,7 @@
 '''
 Interface for pygplates reconstruction method
 Public methods:
-@reconstruct([geojson], [age])
+@reconstruct([geojson], [age], ?[model])
 
 + Splits items on to plates and rotates them to the desired age
 + Because of oddities with pygplates, it also converts properties
@@ -11,6 +11,7 @@ Public methods:
 '''
 from cut import cut
 import json
+from datetime import datetime
 from copy import deepcopy
 import time
 from shapely.geometry import mapping, shape, MultiPolygon, Polygon, LineString, MultiLineString, Point
@@ -18,6 +19,8 @@ from shapely.geometry import mapping, shape, MultiPolygon, Polygon, LineString, 
 import sys
 sys.path.insert(1, './pygplates_rev12_python27_MacOS64')
 import pygplates
+
+from models import models, models_meta
 
 # *sigh....* pygplates requires props to be UTF-8 encoded and not contain any null values...
 def encode_props(props):
@@ -58,8 +61,14 @@ def construct_gplate_feature(f, plateid, props):
     return gplateFeature
 
 
-def rotate(features,age):
-    rotation_model = pygplates.RotationModel('./1_Phanerozoic_Plate_Motions_GPlates/Phanerozoic_EarthByte.rot')
+def rotate(features, age, model):
+    if len(models[model]['models']) == 1:
+        rotation_model = models[model]['models'][0]['rotation']
+
+    for rot in models[model]['models']:
+        if rot['min_age'] <= age and rot['max_age'] >= age:
+            rotation_model = rot['rotation']
+
     rotated = []
     pygplates.reconstruct(features, rotation_model, rotated, age)
     return rotated
@@ -80,9 +89,11 @@ def build_geojson(gtype, coords):
 def geojsonify(features):
     return [{ 'geometry':  shape(build_geojson(each.get_feature().get_description(), each.get_reconstructed_geometry().to_lat_lon_array())), 'properties': each.get_feature().get_shapefile_attributes() } for each in features]
 
-def reconstruct_feature(props, f, age):
+def reconstruct_feature(props, f, age, model):
+    model = model or 'write2013'
+
     rotated = []
-    cut_feature = cut(f, age)
+    cut_feature = cut(f, age, model)
 
     features = []
     not_rotated = []
@@ -98,9 +109,14 @@ def reconstruct_feature(props, f, age):
                 'geometry': None
             })
 
-    rotated = geojsonify(rotate(features, age))
+    rotated = geojsonify(rotate(features, age, model))
     output = {
         'type': 'FeatureCollection',
+        'properties': {
+            'model': models_meta[model],
+            'date': datetime.now().strftime('%Y-%m-%d'),
+            'age': age
+        },
         'features': [
             {'type': 'Feature', 'properties': f['properties'], 'geometry': mapping(f['geometry']) } for f in rotated
         ]
@@ -110,7 +126,8 @@ def reconstruct_feature(props, f, age):
 
     return output
 
-def reconstruct(input_geojson, age):
+def reconstruct(input_geojson, age, model='wright2013'):
+
     if 'features' in input_geojson:
         features = []
         not_rotated = []
@@ -134,10 +151,15 @@ def reconstruct(input_geojson, age):
 
 
         # Reconstruct the geometries to the given age parse into GeoJSON
-        rotated = geojsonify(rotate(features, age))
+        rotated = geojsonify(rotate(features, age, model))
 
         output = {
             'type': 'FeatureCollection',
+            'properties': {
+                'model': models_meta[model],
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'age': age
+            },
             'features': [
                 {'type': 'Feature', 'properties': f['properties'], 'geometry': mapping(f['geometry']) } for f in rotated
             ]
@@ -151,16 +173,4 @@ def reconstruct(input_geojson, age):
         props = input_geojson['properties'] if 'properties' in input_geojson else {}
         geom = shape(input_geojson['geometry']) if 'geometry' in input_geojson else shape(input_geojson)
 
-        return reconstruct_feature(props, geom, age)
-
-
-#
-# with open('./centroids.geojson', 'r') as input_geojson:
-#     geojson = json.load(input_geojson)
-#     start_time = time.time()
-#     export = reconstruct(geojson, 100)
-#     print 'Finished in %ss' % (round(time.time() - start_time, 2), )
-#
-# # Write it to a file
-# with open('./centroids-processed.geojson', 'wb') as output:
-#     json.dump(export, output)
+        return reconstruct_feature(props, geom, age, model)

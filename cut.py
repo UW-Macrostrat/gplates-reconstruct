@@ -1,24 +1,5 @@
 from shapely.geometry import shape, MultiPolygon, Polygon, LineString, MultiLineString, Point
-import fiona
-from rtree import index
-
-# Spatially index the EarthByte plate set
-# Create the spatial index
-idx_eb = index.Index()
-
-# Create a hash that can be used to look up a plate_id given a plate index
-plate_lookup_eb = {}
-plates_eb = []
-
-# Load the plates from a shapefile and spatially index
-for pos, plate in enumerate(fiona.open('./Phanerozoic_EarthByte_ContinentalRegions/reconstructed.shp')):
-    plate_lookup_eb[pos] =  {
-        'plateid': plate['properties']['PLATEID1'],
-        'fromage': plate['properties']['FROMAGE']
-    }
-    converted = shape(plate['geometry'])
-    idx_eb.insert(pos, converted.bounds)
-    plates_eb.append(converted)
+from models import models
 
 
 def handleMultiLineString(geometry):
@@ -40,15 +21,18 @@ def handleGeometryCollection(geometry):
         print 'Non-empty geometry collection'
         return []
 
-def get_intersecting_plates(bounds):
+def get_intersecting_plates(bounds, model):
     # Use Earthbyte plates (exclude seafloor)
-    return [{'geometry': plates_eb[pos], 'plate_id': plate_lookup_eb[pos]['plateid']} for pos in idx_eb.intersection(bounds)]
 
-def cut_feature(feature, age):
+    return [{'geometry': models[model]['plates'][pos], 'plate_id': models[model]['plate_lookup'][pos]['plateid']} for pos in models[model]['spatial_index'].intersection(bounds)]
+
+# Accepts a geometry
+# Outputs array of objects with a geometry and plate_id
+def cut(feature, age, model):
     pieces = []
 
     # Use the spatial index (Luke) to get a list of plates this Feature intersects
-    intersecting_plates = get_intersecting_plates(feature.bounds)
+    intersecting_plates = get_intersecting_plates(feature.bounds, model)
 
     # For each intersecting plate, get the intersection with the target Feature
     for plate in intersecting_plates:
@@ -74,9 +58,3 @@ def cut_feature(feature, age):
         pieces = [ { 'geometry': None, 'plate_id': None } ]
 
     return pieces
-
-
-def cut(geom, age):
-# Accepts a geometry
-# Outputs array of objects with a geometry and plate_id
-    return cut_feature(geom, age)
