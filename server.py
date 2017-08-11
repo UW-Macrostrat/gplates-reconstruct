@@ -111,8 +111,9 @@ def default(send_wildcard=True):
         if not request.args.get('lat') or not request.args.get('lng') or not request.args.get('age'):
             return throw_error('A lng, lat, and age are required. See documentation at https://github.com/UW-Macrostrat/gplates-reconstruct')
 
-        model = request.args.get('model')
+        model = request.args.get('model') or 'wright2013'
         age = int(request.args.get('age'))
+
 
         validation_error = validate_params(age, model)
         if validation_error:
