@@ -38,7 +38,7 @@ If you have a single point to reconstruct, you can use a simple GET request.
 #### Example
 Reconstruct a point to 100 MA
 ````
-curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?lng=-89&lat=43&age=100'
+curl -o point100.geojson 'https://macrostrat.org/gplates/reconstruct?lng=-89&lat=43&age=100'
 ````
 
 #### Required parameters
@@ -55,7 +55,7 @@ You can also reconstruct a list of points via a GET request.  Because there is a
 #### Example
 Reconstruct a list of points to 100 MA
 ````
-curl -o point100.geojson 'https://dev.macrostrat.org/reconstruct?points=-89,43,1%20-92.5,43.2,2&age=100'
+curl -o point100.geojson 'https://macrostrat.org/gplates/reconstruct?points=-89,43,1%20-92.5,43.2,2&age=100'
 ````
 
 #### Required parameters
@@ -73,14 +73,14 @@ Reconstruct a polygon to 100 MA
 curl -X POST -F \
 'shape={"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-103.71093749999999,37.43997405227057],[-103.71093749999999,46.07323062540835],[-84.0234375,46.07323062540835],[-84.0234375,37.43997405227057],[-103.71093749999999,37.43997405227057]]]}}' \
 -F 'age=100' -o polygon100.geojson \
-https://dev.macrostrat.org/reconstruct
+https://macrostrat.org/gplates/reconstruct
 ````
 
 Reconstruct an entire file:
 ````
 curl -X POST -F "shape=$(cat myfile.geojson)" \
 -F 'age=69' -o reconstructed_myfile.geojson \
-https://dev.macrostrat.org/reconstruct
+https://macrostrat.org/gplates/reconstruct
 ````
 #### Required parameters
 + **shape** - a valid GeoJSON object
